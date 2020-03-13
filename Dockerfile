@@ -11,6 +11,10 @@ RUN docker-php-ext-install -j$(nproc) \
 
 FROM php:7-alpine
 
+RUN apk add --no-cache \
+  libpng \
+  zlib
+
 COPY --from=build /usr/local/etc/php/conf.d/ /usr/local/etc/php/conf.d/
 COPY --from=build /usr/local/lib/php/extensions/ /usr/local/lib/php/extensions/
 
