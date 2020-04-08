@@ -4,10 +4,16 @@ RUN apk add \
   libpng-dev \
   zlib-dev
 
+WORKDIR /usr/src/php/ext
+
+RUN pecl bundle redis \
+  && docker-php-ext-configure redis --enable-redis-lzf
+
 RUN docker-php-ext-install -j$(nproc) \
   bcmath \
   gd \
-  pdo_mysql
+  pdo_mysql \
+  redis
 
 FROM php:7-alpine
 
